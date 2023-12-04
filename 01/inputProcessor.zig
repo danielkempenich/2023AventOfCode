@@ -7,6 +7,19 @@ const Point = struct {
 
 test "part one" {
     try std.testing.expect(processLine("1abc2") == 12);
+    try std.testing.expect(processLine("pqr3stu8vwx") == 38);
+    try std.testing.expect(processLine("a1b2c3d4e5f") == 15);
+    try std.testing.expect(processLine("treb7uchet") == 77);
+}
+
+test "part two" {
+    try std.testing.expect(processLine("two1nine") == 29);
+    try std.testing.expect(processLine("eightwothree") == 83);
+    try std.testing.expect(processLine("abcone2threexyz") == 13);
+    try std.testing.expect(processLine("xtwone3four") == 24);
+    try std.testing.expect(processLine("4nineeightseven2") == 42);
+    try std.testing.expect(processLine("zoneight234") == 14);
+    try std.testing.expect(processLine("7pqrstsixteen") == 76);
 }
 
 pub fn processLine(line: []const u8) u8 {
