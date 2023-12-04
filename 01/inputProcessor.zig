@@ -13,6 +13,8 @@ test "part one" {
 }
 
 test "part two" {
+    try std.testing.expect(processLine("one") == 11);
+    try std.testing.expect(processLine("o2") == 22);
     try std.testing.expect(processLine("two1nine") == 29);
     try std.testing.expect(processLine("eightwothree") == 83);
     try std.testing.expect(processLine("abcone2threexyz") == 13);
@@ -22,18 +24,62 @@ test "part two" {
     try std.testing.expect(processLine("7pqrstsixteen") == 76);
 }
 
+pub fn setPoint(num: u8, point: *Point) void {
+    if (0 == point.first) {
+        point.first = num;
+    }
+    point.second = num;
+}
+
 pub fn processLine(line: []const u8) u8 {
     var point = Point {
         .first = 0,
         .second = 0,
     };
 
-    for (line) |letter| {
+    for (0.., line) |i, letter| {
         if ((letter >= '0') and (letter <= '9')) {
-            if (0 == point.first) {
-                point.first = letter - '0';
-            }
-            point.second = letter - '0';
+            setPoint(letter - '0', &point);
+        }
+
+        switch(letter) {
+            'o' => {
+                if (std.mem.startsWith(u8, line[i..], "one")) {
+                    setPoint(1, &point);
+                }
+            },
+            't' => {
+                if (std.mem.startsWith(u8, line[i..], "two")) {
+                    setPoint(2, &point);
+                } else if (std.mem.startsWith(u8, line[i..], "three")) {
+                    setPoint(3, &point);
+                }
+            },
+            'f' => {
+                if (std.mem.startsWith(u8, line[i..], "four")) {
+                    setPoint(4, &point);
+                } else if (std.mem.startsWith(u8, line[i..], "five")) {
+                    setPoint(5, &point);
+                }
+            },
+            's' => {
+                if (std.mem.startsWith(u8, line[i..], "six")) {
+                    setPoint(6, &point);
+                } else if (std.mem.startsWith(u8, line[i..], "seven")) {
+                    setPoint(7, &point);
+                }
+            },
+            'e' => {
+                if (std.mem.startsWith(u8, line[i..], "eight")) {
+                    setPoint(8, &point);
+                }
+            },
+            'n' => {
+                if (std.mem.startsWith(u8, line[i..], "nine")) {
+                    setPoint(9, &point);
+                }
+            },
+            else => {},
         }
     }
     const calibrationValue: u8 = (point.first * 10) + point.second;
